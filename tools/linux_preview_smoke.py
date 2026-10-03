@@ -57,6 +57,43 @@ ERRORS = re.compile(
     re.IGNORECASE,
 )
 
+# Match the existing sound-enabled tests/render_v2.gd teardown. Raw --quit-after
+# during an active WAV leaves playback refs on both Windows and Linux headless;
+# that diagnostic run remains a documented limitation, not a passed test.
+BATTLE_DRIVER = '''extends SceneTree
+
+func _initialize() -> void:
+	_run.call_deferred()
+
+func _run() -> void:
+	var scene: PackedScene = load("res://scenes/main.tscn")
+	var app: Node = scene.instantiate()
+	root.add_child(app)
+	current_scene = app
+	for _i in 240:
+		await process_frame
+	var battle: Node = app.get("screens").get("battle")
+	var ticks: int = int(battle.get("runner").get("sim").get("tick"))
+	var seconds: float = float(battle.get("runner").get("sim").get("time"))
+	var sfx: Node = root.get_node("Sfx")
+	var audio_cached: int = int(sfx.get("_cache").size())
+	var unit_count: int = int(battle.get("runner").get("sim").get("units").size())
+	var controller_count: int = int(battle.get("runner").get("sim").get("controllers").size())
+	var passed: bool = str(app.get("current")) == "battle" and ticks > 0 and seconds > 0.0 and unit_count == 6 and controller_count == 2 and bool(sfx.get("enabled")) and audio_cached > 0
+	print("LINUX_BATTLE_CHECKPOINT=", JSON.stringify({"status": "PASS" if passed else "FAIL", "frames": 240, "ticks": ticks, "simulation_seconds": seconds, "units": unit_count, "ai_controllers": controller_count, "sound_enabled": bool(sfx.get("enabled")), "audio_streams_generated": audio_cached}))
+	app.free()
+	for player: AudioStreamPlayer in sfx.get("_players"):
+		player.stop()
+		player.stream = null
+	sfx.get("_cache").clear()
+	# Audio mixing uses wall clock even when fixed-fps advances frames quickly.
+	for _i in 30:
+		await process_frame
+		OS.delay_msec(10)
+	print("LINUX_BATTLE_TEARDOWN=PASS")
+	quit(0 if passed else 1)
+'''
+
 
 class SmokeFailure(Exception):
     """Fixed diagnostic code, never an exception carrying headers or URLs."""
@@ -262,8 +299,17 @@ def run_case(executable: Path, work: Path, name: str, user_args: list[str]) -> d
     cwd.mkdir(mode=0o700)
     log = folder / "native.log"
     arguments = ["--headless", "--fixed-fps", "60", "--quit-after", "240", "--"] + user_args
+    driver = None
+    if name == "ai_battle_start":
+        driver = folder / "battle_smoke.gd"
+        driver.write_text(BATTLE_DRIVER, encoding="utf-8", newline="\n")
+        arguments = ["--headless", "--fixed-fps", "60", "--script", str(driver), "--"] + user_args
     started = time.monotonic()
-    result = {"case": name, "arguments": arguments, "status": "FAIL", "timeout_seconds": CHILD_TIMEOUT}
+    shown_arguments = ["<qa-battle-driver>" if driver is not None and item == str(driver) else item for item in arguments]
+    result = {"case": name, "arguments": shown_arguments, "status": "FAIL", "timeout_seconds": CHILD_TIMEOUT}
+    if driver is not None:
+        result["teardown"] = "240 sound-enabled frames; free live scene; stop/unset voices; clear cache; drain 30 frames with 10 ms per frame"
+        result["driver_sha256"] = sha256(driver)
     process = None
     try:
         with log.open("xb") as output:
@@ -291,6 +337,17 @@ def run_case(executable: Path, work: Path, name: str, user_args: list[str]) -> d
         require(code == 0, "native_exit_nonzero")
         require("Godot Engine v4.7.2.stable" in content, "expected_engine_banner_missing")
         require(result["error_or_leak_matches"] == 0, "native_error_or_leak")
+        if driver is not None:
+            checkpoints = [json.loads(line.split("=", 1)[1]) for line in content.splitlines() if line.startswith("LINUX_BATTLE_CHECKPOINT=")]
+            require(len(checkpoints) == 1, "battle_checkpoint_missing")
+            checkpoint = checkpoints[0]
+            require(checkpoint.get("status") == "PASS" and checkpoint.get("frames") == 240
+                    and checkpoint.get("ticks", 0) > 0 and checkpoint.get("simulation_seconds", 0) > 0
+                    and checkpoint.get("units") == 6 and checkpoint.get("ai_controllers") == 2
+                    and checkpoint.get("sound_enabled") is True and checkpoint.get("audio_streams_generated", 0) > 0,
+                    "battle_checkpoint_failed")
+            require("LINUX_BATTLE_TEARDOWN=PASS" in content.splitlines(), "battle_teardown_missing")
+            result["battle_checkpoint"] = checkpoint
         result["status"] = "PASS"
     except SmokeFailure as exc:
         if str(exc) in {"overall_timeout", "interrupted"}:
