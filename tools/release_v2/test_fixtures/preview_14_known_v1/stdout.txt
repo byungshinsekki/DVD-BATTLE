@@ -1,0 +1,114 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 610.62 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 2070 SUPER
+
+PASS hidden codex does not create a simulation
+PASS setup detail has no preview player
+PASS draft detail has no preview player
+PASS requested character and skill open
+PASS runner and view share the scenario simulation
+PASS preview facade cannot independently advance the simulation
+PASS preview canvas keeps 16:9 aspect
+PASS preview dispatches a real ability
+PASS real prison terrain exists in the preview
+PASS 3440x1440 native render resolution matches
+PASS 3440x1440 rendered texture resolution matches
+PASS 3440x1440 preview retains 16:9 aspect
+PASS 3440x1440 preview canvas fits visible region
+PASS 3440x1440 all playback controls stay visible
+PASS 3440x1440 description and conditions stay visible
+PASS 3440x1440 no vertical scroll is needed for playback or conditions
+PASS 1600x900 native render resolution matches
+PASS 1600x900 rendered texture resolution matches
+PASS 1600x900 preview retains 16:9 aspect
+PASS 1600x900 preview canvas fits visible region
+PASS 1600x900 all playback controls stay visible
+PASS 1600x900 description and conditions stay visible
+PASS 1600x900 no vertical scroll is needed for playback or conditions
+PASS pause freezes simulation time
+PASS 2x speed advances twice the simulation time
+PASS restart disposes and replaces the previous scenario
+PASS restart resets the timeline
+PASS non-looping preview stops at its duration
+PASS loop starts a clean new scenario
+PASS swordsman rapid skill switch disposes old state
+PASS swordsman arena tab detaches all simulation references
+PASS swordsman character tab restarts cleanly
+PASS archer rapid skill switch disposes old state
+PASS archer arena tab detaches all simulation references
+PASS archer character tab restarts cleanly
+PASS mage rapid skill switch disposes old state
+PASS mage arena tab detaches all simulation references
+PASS mage character tab restarts cleanly
+PASS sniper rapid skill switch disposes old state
+PASS sniper arena tab detaches all simulation references
+PASS sniper character tab restarts cleanly
+PASS werewolf rapid skill switch disposes old state
+PASS werewolf arena tab detaches all simulation references
+PASS werewolf character tab restarts cleanly
+PASS giant rapid skill switch disposes old state
+PASS giant arena tab detaches all simulation references
+PASS giant character tab restarts cleanly
+PASS aphrodite rapid skill switch disposes old state
+PASS aphrodite arena tab detaches all simulation references
+PASS aphrodite character tab restarts cleanly
+PASS blood_mage rapid skill switch disposes old state
+PASS blood_mage arena tab detaches all simulation references
+PASS blood_mage character tab restarts cleanly
+PASS fisherman rapid skill switch disposes old state
+PASS fisherman arena tab detaches all simulation references
+PASS fisherman character tab restarts cleanly
+PASS baseball rapid skill switch disposes old state
+PASS baseball arena tab detaches all simulation references
+PASS baseball character tab restarts cleanly
+PASS pirate rapid skill switch disposes old state
+PASS pirate arena tab detaches all simulation references
+PASS pirate character tab restarts cleanly
+PASS joker rapid skill switch disposes old state
+PASS joker arena tab detaches all simulation references
+PASS joker character tab restarts cleanly
+PASS metatron rapid skill switch disposes old state
+PASS metatron arena tab detaches all simulation references
+PASS metatron character tab restarts cleanly
+PASS plague_doctor rapid skill switch disposes old state
+PASS plague_doctor arena tab detaches all simulation references
+PASS plague_doctor character tab restarts cleanly
+PASS hive_mind rapid skill switch disposes old state
+PASS hive_mind arena tab detaches all simulation references
+PASS hive_mind character tab restarts cleanly
+PASS nitro rapid skill switch disposes old state
+PASS nitro arena tab detaches all simulation references
+PASS nitro character tab restarts cleanly
+PASS dimensionalist rapid skill switch disposes old state
+PASS dimensionalist arena tab detaches all simulation references
+PASS dimensionalist character tab restarts cleanly
+PASS hermes rapid skill switch disposes old state
+PASS hermes arena tab detaches all simulation references
+PASS hermes character tab restarts cleanly
+PASS world_tree rapid skill switch disposes old state
+PASS world_tree arena tab detaches all simulation references
+PASS world_tree character tab restarts cleanly
+PASS torturer rapid skill switch disposes old state
+PASS torturer arena tab detaches all simulation references
+PASS torturer character tab restarts cleanly
+PASS engineer rapid skill switch disposes old state
+PASS engineer arena tab detaches all simulation references
+PASS engineer character tab restarts cleanly
+PASS politician rapid skill switch disposes old state
+PASS politician arena tab detaches all simulation references
+PASS politician character tab restarts cleanly
+PASS leaving codex stops and disposes the preview
+PASS all preview operations preserve player records
+PASS preview leaves an existing match untouched
+PASS draft exposes incremental search progress
+PASS draft cancellation releases the search
+PASS cancel preserves the chosen roster
+PASS cancelled search can restart
+PASS leaving draft cancels active search
+PASS incremental final 5v5 pick completes
+ERROR: FAIL final pick uses actual battle verification
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tests/preview_ui_14.gd:27)
+       [1] _run (res://tests/preview_ui_14.gd:191)
+PASS UI validation does not write player records
+PREVIEW_UI_14 105 PASS / 1 FAIL {"cancel_ms":17.063,"final_5v5_frames":25,"final_5v5_seconds":0.496192,"layout_1600x900":{"actual_display_size":[1600,900],"actual_render_size":[1600,900],"actual_window_size":[1600,900],"canvas_height":346.5,"canvas_width":616.0,"conditions_bottom":842.0,"controls_bottom":648.0,"display_mode":0,"screen_size":[3440,1440],"screen_usable_rect":"[P: (0, 0), S: (3440, 1392)]","settle_ms":182,"visible_bottom":876.0,"visible_height":746.0,"window_mode":0},"layout_3440x1440":{"actual_display_size":[3440,1440],"actual_render_size":[3440,1440],"actual_window_size":[3440,1440],"canvas_height":397.0,"canvas_width":705.77783203125,"conditions_bottom":868.0,"controls_bottom":698.0,"display_mode":3,"screen_size":[3440,1440],"screen_usable_rect":"[P: (0, 0), S: (3440, 1392)]","settle_ms":2217,"visible_bottom":876.0,"visible_height":746.0,"window_mode":3},"render_backend":"Windows","search_peak_slice_ms":1.358}

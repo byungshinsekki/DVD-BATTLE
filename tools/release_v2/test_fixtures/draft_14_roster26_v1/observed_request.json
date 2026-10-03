@@ -1,0 +1,15 @@
+{
+    "timeout":  900,
+    "args":  [
+                 "--headless",
+                 "--path",
+                 "D:\\DVD_BATTLE_2.0_codex",
+                 "--script",
+                 "res://tests/draft_14.gd"
+             ],
+    "log":  "D:\\DVD_BATTLE_2.0_codex\\zz_work\\logs\\D__DVD_BATTLE_2.0_codex\\suite_draft_14.log",
+    "appdata":  "D:\\DVD20_CODEX_SCRATCH\\godot_profiles\\D__DVD_BATTLE_2.0_codex\\suite_draft_14\\Roaming",
+    "summary":  "D:\\DVD_BATTLE_2.0_codex\\zz_work\\logs\\D__DVD_BATTLE_2.0_codex\\suite_draft_14.log.process.json",
+    "localappdata":  "D:\\DVD20_CODEX_SCRATCH\\godot_profiles\\D__DVD_BATTLE_2.0_codex\\suite_draft_14\\Local",
+    "executable":  "D:\\DVD_BATTLE_1.2.1_RECOVERY_WORK\\tools\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe"
+}

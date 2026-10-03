@@ -1,0 +1,283 @@
+[
+  {
+    "arena_id": "classic",
+    "blue": [
+      "politician",
+      "torturer",
+      "sniper"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_classic",
+    "max_time": 90.0,
+    "red": [
+      "swordsman",
+      "archer",
+      "mage"
+    ],
+    "red_ai": "tactician",
+    "seed": 122700.0
+  },
+  {
+    "arena_id": "ruined_gate",
+    "blue": [
+      "politician",
+      "torturer",
+      "aphrodite"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_ruined_gate",
+    "max_time": 90.0,
+    "red": [
+      "sniper",
+      "werewolf",
+      "giant"
+    ],
+    "red_ai": "tactician",
+    "seed": 122701.0
+  },
+  {
+    "arena_id": "thorn_circuit",
+    "blue": [
+      "politician",
+      "torturer",
+      "baseball"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_thorn_circuit",
+    "max_time": 90.0,
+    "red": [
+      "aphrodite",
+      "blood_mage",
+      "fisherman"
+    ],
+    "red_ai": "tactician",
+    "seed": 122702.0
+  },
+  {
+    "arena_id": "furnace_basin",
+    "blue": [
+      "politician",
+      "torturer",
+      "metatron"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_furnace_basin",
+    "max_time": 90.0,
+    "red": [
+      "baseball",
+      "pirate",
+      "joker"
+    ],
+    "red_ai": "tactician",
+    "seed": 122703.0
+  },
+  {
+    "arena_id": "wind_temple",
+    "blue": [
+      "politician",
+      "torturer",
+      "nitro"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_wind_temple",
+    "max_time": 90.0,
+    "red": [
+      "metatron",
+      "plague_doctor",
+      "hive_mind"
+    ],
+    "red_ai": "tactician",
+    "seed": 122704.0
+  },
+  {
+    "arena_id": "dimensional_lattice",
+    "blue": [
+      "politician",
+      "torturer",
+      "world_tree"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_dimensional_lattice",
+    "max_time": 90.0,
+    "red": [
+      "nitro",
+      "dimensionalist",
+      "hermes"
+    ],
+    "red_ai": "tactician",
+    "seed": 122705.0
+  },
+  {
+    "arena_id": "crossroads",
+    "blue": [
+      "politician",
+      "torturer",
+      "archer"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_crossroads",
+    "max_time": 90.0,
+    "red": [
+      "world_tree",
+      "engineer",
+      "swordsman"
+    ],
+    "red_ai": "tactician",
+    "seed": 122706.0
+  },
+  {
+    "arena_id": "moon_garden",
+    "blue": [
+      "politician",
+      "torturer",
+      "werewolf"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_moon_garden",
+    "max_time": 90.0,
+    "red": [
+      "archer",
+      "mage",
+      "sniper"
+    ],
+    "red_ai": "tactician",
+    "seed": 122707.0
+  },
+  {
+    "arena_id": "twin_foundry",
+    "blue": [
+      "politician",
+      "torturer",
+      "blood_mage"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_twin_foundry",
+    "max_time": 90.0,
+    "red": [
+      "werewolf",
+      "giant",
+      "aphrodite"
+    ],
+    "red_ai": "tactician",
+    "seed": 122708.0
+  },
+  {
+    "arena_id": "gale_corridor",
+    "blue": [
+      "politician",
+      "torturer",
+      "pirate"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_gale_corridor",
+    "max_time": 90.0,
+    "red": [
+      "blood_mage",
+      "fisherman",
+      "baseball"
+    ],
+    "red_ai": "tactician",
+    "seed": 122709.0
+  },
+  {
+    "arena_id": "rift_harbor",
+    "blue": [
+      "politician",
+      "torturer",
+      "plague_doctor"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_rift_harbor",
+    "max_time": 90.0,
+    "red": [
+      "pirate",
+      "joker",
+      "metatron"
+    ],
+    "red_ai": "tactician",
+    "seed": 122710.0
+  },
+  {
+    "arena_id": "bastion_ring",
+    "blue": [
+      "politician",
+      "torturer",
+      "dimensionalist"
+    ],
+    "blue_ai": "tactician",
+    "id": "release_bastion_ring",
+    "max_time": 90.0,
+    "red": [
+      "plague_doctor",
+      "hive_mind",
+      "nitro"
+    ],
+    "red_ai": "tactician",
+    "seed": 122711.0
+  },
+  {
+    "arena_id": "control_crossroads",
+    "blue": [
+      "giant",
+      "torturer",
+      "politician",
+      "archer",
+      "aphrodite"
+    ],
+    "blue_ai": "tactician",
+    "id": "control_0_0_0",
+    "max_time": 480.0,
+    "red": [
+      "swordsman",
+      "mage",
+      "metatron",
+      "hive_mind",
+      "fisherman"
+    ],
+    "red_ai": "tactician",
+    "ruleset": "control",
+    "seed": 130000.0
+  },
+  {
+    "arena_id": "control_citadel",
+    "blue": [
+      "nitro",
+      "sniper",
+      "blood_mage",
+      "plague_doctor",
+      "hermes"
+    ],
+    "blue_ai": "tactician",
+    "id": "control_1_1_0",
+    "max_time": 480.0,
+    "red": [
+      "baseball",
+      "joker",
+      "engineer",
+      "world_tree",
+      "dimensionalist"
+    ],
+    "red_ai": "tactician",
+    "ruleset": "control",
+    "seed": 130101.0
+  },
+  {
+    "arena_id": "control_waterway",
+    "blue": [
+      "pirate",
+      "werewolf",
+      "politician"
+    ],
+    "blue_ai": "tactician",
+    "id": "control_2_2_0",
+    "max_time": 480.0,
+    "red": [
+      "torturer",
+      "engineer",
+      "aphrodite"
+    ],
+    "red_ai": "tactician",
+    "ruleset": "control",
+    "seed": 130202.0
+  }
+]

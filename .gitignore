@@ -1,0 +1,22 @@
+# Generated caches and local development evidence
+.godot/
+__pycache__/
+*.pyc
+*.pyo
+*.tmp
+*.bak
+/.claude/
+/.codex/
+/zz_work/
+/zz_diag/
+/reports/*
+!/reports/regression_cases_14.json
+/builds/
+/dist/
+*.exe
+*.pck
+*.zip
+*.app/
+.env
+.env.*
+!.env.example

@@ -1,0 +1,28 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: FAIL the demo battle shows TANK_DESTROYED
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tests/render_v2.gd:39)
+       [1] _live_battle (res://tests/render_v2.gd:252)
+ERROR: FAIL the demo battle shows OVERDRIVE
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tests/render_v2.gd:39)
+       [1] _live_battle (res://tests/render_v2.gd:252)
+ERROR: FAIL the demo battle draws the overdrive state
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tests/render_v2.gd:39)
+       [1] _live_battle (res://tests/render_v2.gd:254)
+ERROR: FAIL the demo battle draws the charge state
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tests/render_v2.gd:39)
+       [1] _live_battle (res://tests/render_v2.gd:254)
+ERROR: FAIL the demo battle draws the missileBarrage state
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tests/render_v2.gd:39)
+       [1] _live_battle (res://tests/render_v2.gd:254)
+RENDER_V2 {"failed":["the demo battle shows TANK_DESTROYED","the demo battle shows OVERDRIVE","the demo battle draws the overdrive state","the demo battle draws the charge state","the demo battle draws the missileBarrage state"],"metrics":{"live":{"draws":{"ev_fx":1859,"fx":1859,"hud_layer":930,"proj_solid_layer":930,"unit_layer":930,"zone_layer":930},"events":["CHARIOT_KNOCK","CLEANSED","FRONT_BLOCKED"],"kinds":["cerberus","fuel_tank","shade","chariot"],"states":["concealed","peliasSpear"],"ticks":1861},"patterns":["shadeSpawn","underworldCleave","soulHarvest","boosterDash","missileBarrage","arcShield","genocideStrip","autoDaFe","edictBind","alhambraEdict","peliasSpear","hephaestusShield","warRoar","chariotCharge"],"showcase":{"fx_items":["cleanse","block","soft","sig","cone","flash","strip","impact","tether","wave"],"kinds":{"cerberus":1,"chariot":1,"fuel_tank":1,"shade":5},"zones":["rect:genocideStrip","circle:autoDaFe"]}},"passed":190,"status":"FAIL"}

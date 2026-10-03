@@ -1,0 +1,1226 @@
+[
+ {
+  "id": "tq_classic_0_b",
+  "arena_id": "classic",
+  "seed": 271000,
+  "blue": [
+   "torquemada",
+   "blood_mage",
+   "pirate"
+  ],
+  "red": [
+   "joker",
+   "dimensionalist",
+   "world_tree"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_classic_0_r",
+  "arena_id": "classic",
+  "seed": 271000,
+  "blue": [
+   "joker",
+   "dimensionalist",
+   "world_tree"
+  ],
+  "red": [
+   "torquemada",
+   "blood_mage",
+   "pirate"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_classic_1_b",
+  "arena_id": "classic",
+  "seed": 271007,
+  "blue": [
+   "torquemada",
+   "engineer",
+   "metatron"
+  ],
+  "red": [
+   "sniper",
+   "torturer",
+   "werewolf"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_classic_1_r",
+  "arena_id": "classic",
+  "seed": 271007,
+  "blue": [
+   "sniper",
+   "torturer",
+   "werewolf"
+  ],
+  "red": [
+   "torquemada",
+   "engineer",
+   "metatron"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_classic_2_b",
+  "arena_id": "classic",
+  "seed": 271014,
+  "blue": [
+   "torquemada",
+   "aphrodite",
+   "mage"
+  ],
+  "red": [
+   "politician",
+   "werewolf",
+   "archer"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_classic_2_r",
+  "arena_id": "classic",
+  "seed": 271014,
+  "blue": [
+   "politician",
+   "werewolf",
+   "archer"
+  ],
+  "red": [
+   "torquemada",
+   "aphrodite",
+   "mage"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_classic_3_b",
+  "arena_id": "classic",
+  "seed": 271021,
+  "blue": [
+   "torquemada",
+   "giant",
+   "hive_mind"
+  ],
+  "red": [
+   "metatron",
+   "aphrodite",
+   "pirate"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_classic_3_r",
+  "arena_id": "classic",
+  "seed": 271021,
+  "blue": [
+   "metatron",
+   "aphrodite",
+   "pirate"
+  ],
+  "red": [
+   "torquemada",
+   "giant",
+   "hive_mind"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_classic_4_b",
+  "arena_id": "classic",
+  "seed": 271028,
+  "blue": [
+   "torquemada",
+   "aphrodite",
+   "world_tree"
+  ],
+  "red": [
+   "fisherman",
+   "metatron",
+   "pirate"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_classic_4_r",
+  "arena_id": "classic",
+  "seed": 271028,
+  "blue": [
+   "fisherman",
+   "metatron",
+   "pirate"
+  ],
+  "red": [
+   "torquemada",
+   "aphrodite",
+   "world_tree"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_classic_5_b",
+  "arena_id": "classic",
+  "seed": 271035,
+  "blue": [
+   "torquemada",
+   "swordsman",
+   "blood_mage"
+  ],
+  "red": [
+   "hermes",
+   "fisherman",
+   "nitro"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_classic_5_r",
+  "arena_id": "classic",
+  "seed": 271035,
+  "blue": [
+   "hermes",
+   "fisherman",
+   "nitro"
+  ],
+  "red": [
+   "torquemada",
+   "swordsman",
+   "blood_mage"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_thorn_circuit_0_b",
+  "arena_id": "thorn_circuit",
+  "seed": 271042,
+  "blue": [
+   "torquemada",
+   "hive_mind",
+   "giant"
+  ],
+  "red": [
+   "joker",
+   "metatron",
+   "dimensionalist"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_thorn_circuit_0_r",
+  "arena_id": "thorn_circuit",
+  "seed": 271042,
+  "blue": [
+   "joker",
+   "metatron",
+   "dimensionalist"
+  ],
+  "red": [
+   "torquemada",
+   "hive_mind",
+   "giant"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_thorn_circuit_1_b",
+  "arena_id": "thorn_circuit",
+  "seed": 271049,
+  "blue": [
+   "torquemada",
+   "archer",
+   "hive_mind"
+  ],
+  "red": [
+   "metatron",
+   "world_tree",
+   "engineer"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_thorn_circuit_1_r",
+  "arena_id": "thorn_circuit",
+  "seed": 271049,
+  "blue": [
+   "metatron",
+   "world_tree",
+   "engineer"
+  ],
+  "red": [
+   "torquemada",
+   "archer",
+   "hive_mind"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_thorn_circuit_2_b",
+  "arena_id": "thorn_circuit",
+  "seed": 271056,
+  "blue": [
+   "torquemada",
+   "nitro",
+   "sniper"
+  ],
+  "red": [
+   "politician",
+   "metatron",
+   "giant"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_thorn_circuit_2_r",
+  "arena_id": "thorn_circuit",
+  "seed": 271056,
+  "blue": [
+   "politician",
+   "metatron",
+   "giant"
+  ],
+  "red": [
+   "torquemada",
+   "nitro",
+   "sniper"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_thorn_circuit_3_b",
+  "arena_id": "thorn_circuit",
+  "seed": 271063,
+  "blue": [
+   "torquemada",
+   "plague_doctor",
+   "giant"
+  ],
+  "red": [
+   "engineer",
+   "dimensionalist",
+   "baseball"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_thorn_circuit_3_r",
+  "arena_id": "thorn_circuit",
+  "seed": 271063,
+  "blue": [
+   "engineer",
+   "dimensionalist",
+   "baseball"
+  ],
+  "red": [
+   "torquemada",
+   "plague_doctor",
+   "giant"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_thorn_circuit_4_b",
+  "arena_id": "thorn_circuit",
+  "seed": 271070,
+  "blue": [
+   "torquemada",
+   "archer",
+   "nitro"
+  ],
+  "red": [
+   "hive_mind",
+   "swordsman",
+   "world_tree"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_thorn_circuit_4_r",
+  "arena_id": "thorn_circuit",
+  "seed": 271070,
+  "blue": [
+   "hive_mind",
+   "swordsman",
+   "world_tree"
+  ],
+  "red": [
+   "torquemada",
+   "archer",
+   "nitro"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_thorn_circuit_5_b",
+  "arena_id": "thorn_circuit",
+  "seed": 271077,
+  "blue": [
+   "torquemada",
+   "blood_mage",
+   "hive_mind"
+  ],
+  "red": [
+   "politician",
+   "world_tree",
+   "dimensionalist"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_thorn_circuit_5_r",
+  "arena_id": "thorn_circuit",
+  "seed": 271077,
+  "blue": [
+   "politician",
+   "world_tree",
+   "dimensionalist"
+  ],
+  "red": [
+   "torquemada",
+   "blood_mage",
+   "hive_mind"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_wind_temple_0_b",
+  "arena_id": "wind_temple",
+  "seed": 271084,
+  "blue": [
+   "torquemada",
+   "hive_mind",
+   "werewolf"
+  ],
+  "red": [
+   "nitro",
+   "fisherman",
+   "world_tree"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_wind_temple_0_r",
+  "arena_id": "wind_temple",
+  "seed": 271084,
+  "blue": [
+   "nitro",
+   "fisherman",
+   "world_tree"
+  ],
+  "red": [
+   "torquemada",
+   "hive_mind",
+   "werewolf"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_wind_temple_1_b",
+  "arena_id": "wind_temple",
+  "seed": 271091,
+  "blue": [
+   "torquemada",
+   "blood_mage",
+   "mage"
+  ],
+  "red": [
+   "aphrodite",
+   "archer",
+   "world_tree"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_wind_temple_1_r",
+  "arena_id": "wind_temple",
+  "seed": 271091,
+  "blue": [
+   "aphrodite",
+   "archer",
+   "world_tree"
+  ],
+  "red": [
+   "torquemada",
+   "blood_mage",
+   "mage"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_wind_temple_2_b",
+  "arena_id": "wind_temple",
+  "seed": 271098,
+  "blue": [
+   "torquemada",
+   "pirate",
+   "aphrodite"
+  ],
+  "red": [
+   "hive_mind",
+   "sniper",
+   "joker"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_wind_temple_2_r",
+  "arena_id": "wind_temple",
+  "seed": 271098,
+  "blue": [
+   "hive_mind",
+   "sniper",
+   "joker"
+  ],
+  "red": [
+   "torquemada",
+   "pirate",
+   "aphrodite"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_wind_temple_3_b",
+  "arena_id": "wind_temple",
+  "seed": 271105,
+  "blue": [
+   "torquemada",
+   "pirate",
+   "world_tree"
+  ],
+  "red": [
+   "engineer",
+   "mage",
+   "werewolf"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_wind_temple_3_r",
+  "arena_id": "wind_temple",
+  "seed": 271105,
+  "blue": [
+   "engineer",
+   "mage",
+   "werewolf"
+  ],
+  "red": [
+   "torquemada",
+   "pirate",
+   "world_tree"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_wind_temple_4_b",
+  "arena_id": "wind_temple",
+  "seed": 271112,
+  "blue": [
+   "torquemada",
+   "hive_mind",
+   "engineer"
+  ],
+  "red": [
+   "nitro",
+   "dimensionalist",
+   "joker"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_wind_temple_4_r",
+  "arena_id": "wind_temple",
+  "seed": 271112,
+  "blue": [
+   "nitro",
+   "dimensionalist",
+   "joker"
+  ],
+  "red": [
+   "torquemada",
+   "hive_mind",
+   "engineer"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_wind_temple_5_b",
+  "arena_id": "wind_temple",
+  "seed": 271119,
+  "blue": [
+   "torquemada",
+   "nitro",
+   "fisherman"
+  ],
+  "red": [
+   "hermes",
+   "politician",
+   "werewolf"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_wind_temple_5_r",
+  "arena_id": "wind_temple",
+  "seed": 271119,
+  "blue": [
+   "hermes",
+   "politician",
+   "werewolf"
+  ],
+  "red": [
+   "torquemada",
+   "nitro",
+   "fisherman"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_crossroads_0_b",
+  "arena_id": "crossroads",
+  "seed": 271126,
+  "blue": [
+   "torquemada",
+   "aphrodite",
+   "politician"
+  ],
+  "red": [
+   "joker",
+   "hive_mind",
+   "archer"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_crossroads_0_r",
+  "arena_id": "crossroads",
+  "seed": 271126,
+  "blue": [
+   "joker",
+   "hive_mind",
+   "archer"
+  ],
+  "red": [
+   "torquemada",
+   "aphrodite",
+   "politician"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_crossroads_1_b",
+  "arena_id": "crossroads",
+  "seed": 271133,
+  "blue": [
+   "torquemada",
+   "hive_mind",
+   "blood_mage"
+  ],
+  "red": [
+   "hermes",
+   "archer",
+   "dimensionalist"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_crossroads_1_r",
+  "arena_id": "crossroads",
+  "seed": 271133,
+  "blue": [
+   "hermes",
+   "archer",
+   "dimensionalist"
+  ],
+  "red": [
+   "torquemada",
+   "hive_mind",
+   "blood_mage"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_crossroads_2_b",
+  "arena_id": "crossroads",
+  "seed": 271140,
+  "blue": [
+   "torquemada",
+   "metatron",
+   "hive_mind"
+  ],
+  "red": [
+   "werewolf",
+   "mage",
+   "blood_mage"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_crossroads_2_r",
+  "arena_id": "crossroads",
+  "seed": 271140,
+  "blue": [
+   "werewolf",
+   "mage",
+   "blood_mage"
+  ],
+  "red": [
+   "torquemada",
+   "metatron",
+   "hive_mind"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_crossroads_3_b",
+  "arena_id": "crossroads",
+  "seed": 271147,
+  "blue": [
+   "torquemada",
+   "giant",
+   "nitro"
+  ],
+  "red": [
+   "hermes",
+   "baseball",
+   "blood_mage"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_crossroads_3_r",
+  "arena_id": "crossroads",
+  "seed": 271147,
+  "blue": [
+   "hermes",
+   "baseball",
+   "blood_mage"
+  ],
+  "red": [
+   "torquemada",
+   "giant",
+   "nitro"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_crossroads_4_b",
+  "arena_id": "crossroads",
+  "seed": 271154,
+  "blue": [
+   "torquemada",
+   "giant",
+   "aphrodite"
+  ],
+  "red": [
+   "dimensionalist",
+   "joker",
+   "torturer"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_crossroads_4_r",
+  "arena_id": "crossroads",
+  "seed": 271154,
+  "blue": [
+   "dimensionalist",
+   "joker",
+   "torturer"
+  ],
+  "red": [
+   "torquemada",
+   "giant",
+   "aphrodite"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_crossroads_5_b",
+  "arena_id": "crossroads",
+  "seed": 271161,
+  "blue": [
+   "torquemada",
+   "engineer",
+   "hermes"
+  ],
+  "red": [
+   "aphrodite",
+   "werewolf",
+   "fisherman"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_crossroads_5_r",
+  "arena_id": "crossroads",
+  "seed": 271161,
+  "blue": [
+   "aphrodite",
+   "werewolf",
+   "fisherman"
+  ],
+  "red": [
+   "torquemada",
+   "engineer",
+   "hermes"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_twin_foundry_0_b",
+  "arena_id": "twin_foundry",
+  "seed": 271168,
+  "blue": [
+   "torquemada",
+   "giant",
+   "sniper"
+  ],
+  "red": [
+   "hive_mind",
+   "nitro",
+   "politician"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_twin_foundry_0_r",
+  "arena_id": "twin_foundry",
+  "seed": 271168,
+  "blue": [
+   "hive_mind",
+   "nitro",
+   "politician"
+  ],
+  "red": [
+   "torquemada",
+   "giant",
+   "sniper"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_twin_foundry_1_b",
+  "arena_id": "twin_foundry",
+  "seed": 271175,
+  "blue": [
+   "torquemada",
+   "giant",
+   "politician"
+  ],
+  "red": [
+   "torturer",
+   "werewolf",
+   "hermes"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_twin_foundry_1_r",
+  "arena_id": "twin_foundry",
+  "seed": 271175,
+  "blue": [
+   "torturer",
+   "werewolf",
+   "hermes"
+  ],
+  "red": [
+   "torquemada",
+   "giant",
+   "politician"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_twin_foundry_2_b",
+  "arena_id": "twin_foundry",
+  "seed": 271182,
+  "blue": [
+   "torquemada",
+   "pirate",
+   "metatron"
+  ],
+  "red": [
+   "fisherman",
+   "archer",
+   "engineer"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_twin_foundry_2_r",
+  "arena_id": "twin_foundry",
+  "seed": 271182,
+  "blue": [
+   "fisherman",
+   "archer",
+   "engineer"
+  ],
+  "red": [
+   "torquemada",
+   "pirate",
+   "metatron"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_twin_foundry_3_b",
+  "arena_id": "twin_foundry",
+  "seed": 271189,
+  "blue": [
+   "torquemada",
+   "torturer",
+   "blood_mage"
+  ],
+  "red": [
+   "swordsman",
+   "metatron",
+   "archer"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_twin_foundry_3_r",
+  "arena_id": "twin_foundry",
+  "seed": 271189,
+  "blue": [
+   "swordsman",
+   "metatron",
+   "archer"
+  ],
+  "red": [
+   "torquemada",
+   "torturer",
+   "blood_mage"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_twin_foundry_4_b",
+  "arena_id": "twin_foundry",
+  "seed": 271196,
+  "blue": [
+   "torquemada",
+   "engineer",
+   "aphrodite"
+  ],
+  "red": [
+   "world_tree",
+   "hermes",
+   "werewolf"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_twin_foundry_4_r",
+  "arena_id": "twin_foundry",
+  "seed": 271196,
+  "blue": [
+   "world_tree",
+   "hermes",
+   "werewolf"
+  ],
+  "red": [
+   "torquemada",
+   "engineer",
+   "aphrodite"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_twin_foundry_5_b",
+  "arena_id": "twin_foundry",
+  "seed": 271203,
+  "blue": [
+   "torquemada",
+   "nitro",
+   "werewolf"
+  ],
+  "red": [
+   "hermes",
+   "hive_mind",
+   "sniper"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_twin_foundry_5_r",
+  "arena_id": "twin_foundry",
+  "seed": 271203,
+  "blue": [
+   "hermes",
+   "hive_mind",
+   "sniper"
+  ],
+  "red": [
+   "torquemada",
+   "nitro",
+   "werewolf"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_rift_harbor_0_b",
+  "arena_id": "rift_harbor",
+  "seed": 271210,
+  "blue": [
+   "torquemada",
+   "dimensionalist",
+   "pirate"
+  ],
+  "red": [
+   "hive_mind",
+   "baseball",
+   "hermes"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_rift_harbor_0_r",
+  "arena_id": "rift_harbor",
+  "seed": 271210,
+  "blue": [
+   "hive_mind",
+   "baseball",
+   "hermes"
+  ],
+  "red": [
+   "torquemada",
+   "dimensionalist",
+   "pirate"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_rift_harbor_1_b",
+  "arena_id": "rift_harbor",
+  "seed": 271217,
+  "blue": [
+   "torquemada",
+   "engineer",
+   "metatron"
+  ],
+  "red": [
+   "aphrodite",
+   "joker",
+   "blood_mage"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_rift_harbor_1_r",
+  "arena_id": "rift_harbor",
+  "seed": 271217,
+  "blue": [
+   "aphrodite",
+   "joker",
+   "blood_mage"
+  ],
+  "red": [
+   "torquemada",
+   "engineer",
+   "metatron"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_rift_harbor_2_b",
+  "arena_id": "rift_harbor",
+  "seed": 271224,
+  "blue": [
+   "torquemada",
+   "pirate",
+   "swordsman"
+  ],
+  "red": [
+   "aphrodite",
+   "hive_mind",
+   "engineer"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_rift_harbor_2_r",
+  "arena_id": "rift_harbor",
+  "seed": 271224,
+  "blue": [
+   "aphrodite",
+   "hive_mind",
+   "engineer"
+  ],
+  "red": [
+   "torquemada",
+   "pirate",
+   "swordsman"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_rift_harbor_3_b",
+  "arena_id": "rift_harbor",
+  "seed": 271231,
+  "blue": [
+   "torquemada",
+   "sniper",
+   "engineer"
+  ],
+  "red": [
+   "plague_doctor",
+   "world_tree",
+   "nitro"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_rift_harbor_3_r",
+  "arena_id": "rift_harbor",
+  "seed": 271231,
+  "blue": [
+   "plague_doctor",
+   "world_tree",
+   "nitro"
+  ],
+  "red": [
+   "torquemada",
+   "sniper",
+   "engineer"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_rift_harbor_4_b",
+  "arena_id": "rift_harbor",
+  "seed": 271238,
+  "blue": [
+   "torquemada",
+   "werewolf",
+   "hermes"
+  ],
+  "red": [
+   "pirate",
+   "joker",
+   "world_tree"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_rift_harbor_4_r",
+  "arena_id": "rift_harbor",
+  "seed": 271238,
+  "blue": [
+   "pirate",
+   "joker",
+   "world_tree"
+  ],
+  "red": [
+   "torquemada",
+   "werewolf",
+   "hermes"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ },
+ {
+  "id": "tq_rift_harbor_5_b",
+  "arena_id": "rift_harbor",
+  "seed": 271245,
+  "blue": [
+   "torquemada",
+   "werewolf",
+   "joker"
+  ],
+  "red": [
+   "fisherman",
+   "world_tree",
+   "giant"
+  ],
+  "max_time": 150.0,
+  "tq_side": 0
+ },
+ {
+  "id": "tq_rift_harbor_5_r",
+  "arena_id": "rift_harbor",
+  "seed": 271245,
+  "blue": [
+   "fisherman",
+   "world_tree",
+   "giant"
+  ],
+  "red": [
+   "torquemada",
+   "werewolf",
+   "joker"
+  ],
+  "max_time": 150.0,
+  "tq_side": 1
+ }
+]

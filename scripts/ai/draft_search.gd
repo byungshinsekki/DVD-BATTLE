@@ -1,0 +1,555 @@
+class_name DraftSearch14
+extends RefCounted
+
+# Explicit stacks make one evaluation or one simulation tick the largest work
+# unit. Deadlines only schedule work; they never change which branches are tried.
+var director: RefCounted
+var roots: Array = []
+var user_team: Array = []
+var ai_team: Array = []
+var cursor: int = 0
+var covered: int = 0
+var completed_depth: int = 0
+var layer: int = 1
+var max_depth: int = 1
+var calls: int = 0
+var nodes: int = 0
+var total_budget: int = 0
+var done: bool = false
+var cancelled: bool = false
+var phase: String = "coverage"
+var output: Dictionary = {}
+var rollout_enabled: bool = true
+var rollout_horizon: int = 600
+var rollout_tick_budget: int = 2400
+var rollout_ticks: int = 0
+var rollout_jobs: Array = []
+var rollout_cursor: int = 0
+var rollout_sim: BattleSim
+var rollout_stage: int = 0         # 0 build sim, 1 path grids, 2 controllers + start, 3 ticks
+var rollout_warm: Array = []
+var rollout_rows: Array = []
+var final_candidates: Array = []
+var engine_signal_weight: float = 0.24
+var completion_evals: int = 0
+var completion_leaves: int = 0
+var beam_cap: int = 6
+var planned_depth: int = 0
+var planned_evals_per_root: int = 0
+var terminal_reuses: int = 0
+# V1.5.3 (audit DR-3): the engine check only runs when the two finalists are
+# close enough for its small weight to matter, and a control rollout lasts at
+# least 60 s (the first capture takes 10-15 s; 20 s measured nothing). A
+# control check plays each finalist once on the same side with the same seed
+# (a paired comparison; conquest showed no side bias), which keeps the 60 s
+# games at 3600 ticks instead of 7200. Elimination keeps both sides.
+const ROLLOUT_GAP: = 0.03
+const ELIMINATION_HORIZON: = 600      # 20 s
+const CONTROL_HORIZON: = 1800         # 60 s
+var rollout_gap: float = ROLLOUT_GAP
+var rollout_min_horizon: int = 300
+var rollout_sides: int = 2            # games per finalist: both sides, or one paired side in control
+var rollout_skipped: String = ""
+var rollout_unit_usec: float = 0.0   # running cost of one rollout work unit (frame-deadline check)
+
+
+func _init(owner_: RefCounted, user_: Array, ai_: Array) -> void:
+	director = owner_
+	user_team = user_.duplicate()
+	ai_team = ai_.duplicate()
+	total_budget = director.budget
+	rollout_enabled = bool(director.search_options.get("rollout_enabled", true))
+	var control: bool = str(director.ruleset) == "control"
+	var full_horizon: int = CONTROL_HORIZON if control else ELIMINATION_HORIZON
+	rollout_min_horizon = CONTROL_HORIZON if control else 300
+	rollout_sides = 1 if control else 2
+	var games: int = 2 * rollout_sides
+	rollout_tick_budget = clampi(int(director.search_options.get("rollout_tick_budget", full_horizon * games)), 0, CONTROL_HORIZON * 4)
+	rollout_horizon = mini(full_horizon, rollout_tick_budget / games)
+	rollout_gap = maxf(0.0, float(director.search_options.get("rollout_gap", ROLLOUT_GAP)))
+	var am: int = director.mask_of(ai_team)
+	var um: int = director.mask_of(user_team)
+	var legal: PackedInt32Array = director.legal(am, um)
+	total_budget = maxi(total_budget, legal.size())
+	var remaining: int = 2 * director.team_size - ai_team.size() - user_team.size()
+	max_depth = clampi(int(director.search_options.get("max_depth", 7)), 1, maxi(1, remaining))
+	if legal.is_empty() or ai_team.size() >= director.team_size:
+		done = true
+		phase = "complete"
+		director = null
+		return
+	for k in legal.size():
+		roots.append({"idx": legal[k], "a": am | (1 << legal[k]), "u": um,
+			"quota": total_budget / legal.size() + (1 if k < total_budget % legal.size() else 0),
+			"evals": 0, "score": 0.0, "static": 0.0, "line": [], "pending": {}, "stack": []})
+	_plan_horizon(legal.size() - 1, remaining - 1, total_budget / legal.size())
+
+
+func _plan_horizon(legal_count: int, remaining: int, quota: int) -> void:
+	# Reserve enough work for whole, uniformly completed layers. A broad
+	# partial next layer cannot improve any candidate's committed decision.
+	# Keep at least two rational replies at a nonterminal node; use the widest
+	# beam that can reach the greatest common depth within the existing quota.
+	if quota <= 1:
+		return # All available work is already reserved for prefix coverage.
+	var preferences: int = 0
+	for id: String in director.ids:
+		if id not in user_team and id not in ai_team and float(director.user_history.get(id, 0.0)) > 0.0:
+			preferences += 1
+	for cap in range(6, 1, -1):
+		var spent: int = 1 # uniform prefix coverage
+		var depth: int = 0
+		for candidate_depth in range(1, max_depth + 1):
+			var cost: int = _layer_cost(legal_count, remaining, candidate_depth - 1, 1, cap, mini(2, preferences), quota)
+			if spent + cost > quota:
+				break
+			spent += cost
+			depth = candidate_depth
+		if depth > planned_depth:
+			planned_depth = depth
+			planned_evals_per_root = spent
+			beam_cap = cap
+
+
+func _layer_cost(legal_count: int, remaining: int, depth: int, ply: int, cap: int, preferences: int, limit: int) -> int:
+	if remaining <= 0:
+		return 1
+	if depth <= 0:
+		# Every legal candidate is evaluated at every greedy completion slot,
+		# followed by one actual evaluation of the completed composition.
+		return mini(limit + 1, remaining * (2 * legal_count - remaining + 1) / 2 + 1)
+	if remaining == 1:
+		return legal_count # rank rows already are terminal evaluations
+	var width: int = legal_count if remaining <= 2 else mini(legal_count, mini(cap, 6 if ply == 1 else (4 if ply == 2 else 3)) + preferences)
+	var child_cost: int = _layer_cost(legal_count - 1, remaining - 1, depth - 1, ply + 1, cap, preferences, limit)
+	return mini(limit + 1, legal_count + width * child_cost)
+
+
+func progress() -> Dictionary:
+	var fraction: float = minf(0.94, maxf(float(calls) / maxf(1.0, total_budget), float(completed_depth) / (max_depth + 1.0)))
+	if rollout_enabled and rollout_horizon >= rollout_min_horizon and ai_team.size() == int(director.team_size if director != null else 0) - 1:
+		fraction *= 0.70
+	if phase == "rollout":
+		fraction = 0.70 + 0.29 * float(rollout_ticks) / maxf(1.0, rollout_jobs.size() * rollout_horizon)
+	return {"done": done, "cancelled": cancelled, "phase": phase, "fraction": 1.0 if done else fraction,
+		"evals": calls, "budget": total_budget, "completed_depth": completed_depth,
+		"candidates": roots.size(), "covered_candidates": covered,
+		"rollout_ticks": rollout_ticks, "rollout_tick_budget": rollout_tick_budget,
+		"completion_evals": completion_evals, "policy_completed_candidates": roots.size() if completed_depth >= 1 else 0}
+
+
+func cancel() -> void:
+	if rollout_sim:
+		rollout_sim.dispose()
+		rollout_sim = null
+	rollout_stage = 0
+	rollout_warm.clear()
+	for root: Dictionary in roots:
+		root.stack.clear()
+	done = true
+	cancelled = true
+	phase = "cancelled"
+	output = {}
+	director = null
+
+
+func advance(work: int) -> bool:
+	for _i in maxi(1, work):
+		if done:
+			break
+		step()
+	return done
+
+
+func advance_until(deadline_usec: int) -> bool:
+	var worked: bool = false
+	while not done:
+		var now: int = Time.get_ticks_usec()
+		if now >= deadline_usec:
+			break
+		# A battle tick cannot be split: once this slice has done some work,
+		# do not start a tick expected to run past the frame deadline.
+		if worked and phase == "rollout" and now + int(rollout_unit_usec) > deadline_usec:
+			break
+		step()
+		worked = true
+	return done
+
+
+func _eval(root: Dictionary, a: int, u: int) -> float:
+	# Count requests, including cache hits: a quota cannot be bypassed by caches
+	# or by a greedy completion outside the search tree.
+	root.evals += 1
+	calls += 1
+	director.evals = calls
+	return director.value(a, u)
+
+
+func step() -> void:
+	if phase == "rollout":
+		var t0: int = Time.get_ticks_usec()
+		_rollout_step()
+		# Running average cost of one rollout work unit, for advance_until.
+		rollout_unit_usec = rollout_unit_usec * 0.75 + float(Time.get_ticks_usec() - t0) * 0.25
+		return
+	if phase == "coverage":
+		var root: Dictionary = roots[covered]
+		root.score = _eval(root, root.a, root.u)
+		root.static = root.score
+		covered += 1
+		if covered == roots.size():
+			# The initial prefix scores are a uniform emergency fallback, not a
+			# completed strategic horizon. Layer one completes every root's team.
+			completed_depth = 0
+			_start_layer()
+		return
+	var root: Dictionary = roots[cursor]
+	cursor = (cursor + 1) % roots.size()
+	if not root.pending.is_empty():
+		return
+	var frame: Dictionary = root.stack.back()
+	var needs_eval: bool = frame.stage in ["rank", "completion_rank", "completion_score"] or (frame.stage == "init" and director.members(frame.a).size() == director.team_size and director.members(frame.u).size() == director.team_size)
+	if needs_eval and (int(root.evals) >= int(root.quota) or calls >= total_budget):
+		_finish_search()
+		return
+	_step_tree(root)
+	for check: Dictionary in roots:
+		if check.pending.is_empty():
+			return
+	# Commit only a depth completed by EVERY root. An unfinished deeper tree
+	# must never compete against another candidate's shallower value.
+	for item: Dictionary in roots:
+		item.score = item.pending.value
+		item.line = item.pending.line
+	completed_depth = layer
+	if layer >= max_depth:
+		_finish_search()
+	else:
+		layer += 1
+		_start_layer()
+
+
+func _start_layer() -> void:
+	phase = "search"
+	cursor = 0
+	for root: Dictionary in roots:
+		root.pending = {}
+		root.stack = [_frame(root.a, root.u, -1, layer - 1, 1)]
+
+
+func _frame(a: int, u: int, turn: int, depth: int, ply: int) -> Dictionary:
+	return {"a": a, "u": u, "turn": turn, "depth": depth, "ply": ply, "stage": "init", "rows": [], "moves": [], "children": [], "at": 0}
+
+
+func _step_tree(root: Dictionary) -> void:
+	var frame: Dictionary = root.stack.back()
+	if str(frame.stage).begins_with("completion_"):
+		_step_completion(root, frame)
+		return
+	if frame.stage == "init":
+		nodes += 1
+		var an: int = director.members(frame.a).size()
+		var un: int = director.members(frame.u).size()
+		if an == director.team_size and un == director.team_size:
+			_pop(root, {"value": _eval(root, frame.a, frame.u), "line": []})
+			return
+		if frame.depth <= 0:
+			frame.stage = "completion_begin"
+			frame.ca = frame.a
+			frame.cu = frame.u
+			frame.ct = frame.turn
+			frame.completion_line = []
+			return
+		if (an if frame.turn == 1 else un) >= director.team_size:
+			frame.turn = -frame.turn
+		frame.legal = director.legal(frame.a, frame.u)
+		frame.remaining = 2 * director.team_size - an - un
+		frame.stage = "rank"
+		return
+	if frame.stage == "rank":
+		var pick: int = frame.legal[frame.at]
+		var v: float = _eval(root, frame.a | (1 << pick) if frame.turn == 1 else frame.a, frame.u | (1 << pick) if frame.turn == -1 else frame.u)
+		frame.rows.append({"idx": pick, "value": v, "weight": 0.0})
+		frame.at += 1
+		if frame.at >= frame.legal.size():
+			_rank_frame(frame)
+			if int(frame.remaining) == 1:
+				# Ranking the last legal slot already evaluated each complete
+				# roster. Reuse that evidence; do not request the same terminal
+				# value again merely to pass through a one-node child stack.
+				for row: Dictionary in frame.moves:
+					frame.children.append({"value": row.value, "line": [{"side": "ai" if frame.turn == 1 else "user", "id": director.ids[row.idx]}]})
+				terminal_reuses += frame.moves.size()
+				frame.at = frame.moves.size()
+		return
+	if int(frame.at) < frame.moves.size():
+		var pick: int = frame.moves[frame.at].idx
+		frame.at += 1
+		root.stack.append(_frame(frame.a | (1 << pick) if frame.turn == 1 else frame.a, frame.u | (1 << pick) if frame.turn == -1 else frame.u, -frame.turn, frame.depth - 1, frame.ply + 1))
+		return
+	var best: Dictionary = frame.children[0]
+	var expected: float = 0.0
+	var weights: float = 0.0
+	for i in frame.children.size():
+		var child: Dictionary = frame.children[i]
+		if float(child.value) * frame.turn > float(best.value) * frame.turn:
+			best = child
+		var weight: float = frame.moves[i].weight
+		expected += float(child.value) * weight
+		weights += weight
+	var value_: float = best.value
+	if frame.turn == -1 and weights > 0.0:
+		# Strong counterplay remains the majority term; observed pick preferences
+		# affect a bounded expectation, never an assumed certain future choice.
+		value_ = 0.72 * value_ + 0.28 * expected / weights
+	_pop(root, {"value": value_, "line": best.line})
+
+
+func _step_completion(root: Dictionary, frame: Dictionary) -> void:
+	# Complete the public draft at a leaf with a deterministic legal policy.
+	# This is a forecast, not extra minimax depth or knowledge of a future pick.
+	if frame.stage == "completion_begin":
+		var an: int = director.members(frame.ca).size()
+		var un: int = director.members(frame.cu).size()
+		if an == director.team_size and un == director.team_size:
+			frame.stage = "completion_score"
+			return
+		if (an if frame.ct == 1 else un) >= director.team_size:
+			frame.ct = -frame.ct
+		frame.completion_legal = director.legal(frame.ca, frame.cu)
+		frame.completion_at = 0
+		frame.completion_best = -INF if frame.ct == 1 else INF
+		frame.completion_pick = -1
+		frame.stage = "completion_rank"
+		return
+	if frame.stage == "completion_rank":
+		var pick: int = frame.completion_legal[frame.completion_at]
+		var value_: float = _eval(root, frame.ca | (1 << pick) if frame.ct == 1 else frame.ca, frame.cu | (1 << pick) if frame.ct == -1 else frame.cu)
+		completion_evals += 1
+		if int(frame.completion_pick) < 0 or value_ * frame.ct > float(frame.completion_best) * frame.ct + 0.0000001:
+			frame.completion_best = value_
+			frame.completion_pick = pick
+		frame.completion_at += 1
+		if int(frame.completion_at) < frame.completion_legal.size():
+			return
+		var chosen: int = frame.completion_pick
+		frame.completion_line.append({"side": "ai" if frame.ct == 1 else "user", "id": director.ids[chosen], "policy": true})
+		if frame.ct == 1:
+			frame.ca |= 1 << chosen
+		else:
+			frame.cu |= 1 << chosen
+		frame.ct = -frame.ct
+		frame.stage = "completion_begin"
+		return
+	completion_evals += 1
+	completion_leaves += 1
+	_pop(root, {"value": _eval(root, frame.ca, frame.cu), "line": frame.completion_line})
+
+
+func _rank_frame(frame: Dictionary) -> void:
+	frame.rows.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if absf(float(a.value) - float(b.value)) > 0.0000001:
+			return float(a.value) * frame.turn > float(b.value) * frame.turn
+		return int(a.idx) < int(b.idx))
+	var width: int = frame.rows.size() if frame.remaining <= 2 else mini(beam_cap, 6 if frame.ply == 1 else (4 if frame.ply == 2 else 3))
+	frame.moves = frame.rows.slice(0, width)
+	if frame.turn == -1:
+		var history_rows: Array = frame.rows.slice(width)
+		history_rows.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+			var ah: float = maxf(0.0, float(director.user_history.get(director.ids[a.idx], 0)))
+			var bh: float = maxf(0.0, float(director.user_history.get(director.ids[b.idx], 0)))
+			return ah > bh if ah != bh else int(a.idx) < int(b.idx))
+		for i in mini(2, history_rows.size()):
+			if float(director.user_history.get(director.ids[history_rows[i].idx], 0)) > 0.0:
+				frame.moves.append(history_rows[i])
+		var total_history: float = 0.0
+		for row: Dictionary in frame.moves:
+			total_history += maxf(0.0, float(director.user_history.get(director.ids[row.idx], 0)))
+		var prior_mix: float = 0.30 * total_history / (total_history + 12.0)
+		var rational_sum: float = 0.0
+		for row: Dictionary in frame.moves:
+			row.weight = exp(clampf(-(float(row.value) - float(frame.rows[0].value)) / 0.30, -14.0, 0.0))
+			rational_sum += float(row.weight)
+		for row: Dictionary in frame.moves:
+			var history_p: float = (1.0 + maxf(0.0, float(director.user_history.get(director.ids[row.idx], 0)))) / (total_history + frame.moves.size())
+			row.weight = (1.0 - prior_mix) * float(row.weight) / rational_sum + prior_mix * history_p
+	frame.at = 0
+	frame.stage = "children"
+
+
+func _pop(root: Dictionary, result_: Dictionary) -> void:
+	root.stack.pop_back()
+	if root.stack.is_empty():
+		root.pending = result_
+		return
+	var parent: Dictionary = root.stack.back()
+	var move: Dictionary = parent.moves[parent.at - 1]
+	var line: Array = [{"side": "ai" if parent.turn == 1 else "user", "id": director.ids[move.idx]}]
+	line.append_array(result_.line)
+	parent.children.append({"value": result_.value, "line": line})
+
+
+func _sort_candidates() -> void:
+	final_candidates.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if absf(float(a.score) - float(b.score)) > 0.0000001:
+			return float(a.score) > float(b.score)
+		var ha: int = hash(str(director.seed_value) + ":" + str(a.id))
+		var hb: int = hash(str(director.seed_value) + ":" + str(b.id))
+		return ha < hb if ha != hb else str(a.id) < str(b.id))
+
+
+func _finish_search() -> void:
+	for root: Dictionary in roots:
+		root.stack.clear()
+		var reply: String = ""
+		for step_: Dictionary in root.line:
+			if step_.side == "user":
+				reply = step_.id
+				break
+		final_candidates.append({"id": director.ids[root.idx], "score": root.score, "static": root.static, "search_score": root.score, "reply": reply, "line": root.line})
+	_sort_candidates()
+	# Final-pick only: hypothetical teams are then completely specified or have
+	# a single publicly legal forecast reply. No live match state is consulted.
+	var final_pick: bool = rollout_enabled and ai_team.size() == director.team_size - 1 and user_team.size() >= director.team_size - 1 and final_candidates.size() >= 2
+	if final_pick and rollout_horizon < rollout_min_horizon:
+		rollout_skipped = "horizon"
+	elif final_pick and float(final_candidates[0].score) - float(final_candidates[1].score) > rollout_gap:
+		# Measured engine signals moved finalist scores by about 0.01; the
+		# short engine check cannot change a pick separated by more than the gap.
+		rollout_skipped = "gap"
+	elif final_pick:
+		for candidate: Dictionary in final_candidates.slice(0, 2):
+			var ours: Array = ai_team.duplicate()
+			var theirs: Array = user_team.duplicate()
+			ours.append(candidate.id)
+			if theirs.size() < director.team_size and str(candidate.reply) != "":
+				theirs.append(candidate.reply)
+			if theirs.size() != director.team_size:
+				rollout_jobs.clear()
+				break
+			for side in rollout_sides:
+				rollout_jobs.append({"id": candidate.id, "ours": ours, "theirs": theirs, "side": side})
+	if rollout_jobs.size() == 2 * rollout_sides:
+		phase = "rollout"
+	else:
+		_complete()
+
+
+func _rollout_step() -> void:
+	var job: Dictionary = rollout_jobs[rollout_cursor]
+	# Building a battle is split into small work units so a UI frame deadline
+	# is checked between them: the simulation, each path grid it will need,
+	# then the controllers and the start.
+	if rollout_sim == null:
+		rollout_sim = BattleSim.new({"blue": job.ours if job.side == 0 else job.theirs,
+			"red": job.theirs if job.side == 0 else job.ours, "seed": director.seed_value + 32003,
+			"arena_id": director.arena_id, "ruleset": director.ruleset})
+		rollout_stage = 1
+		rollout_warm.clear()
+		var buckets: Dictionary = {}
+		for u: BUnit in rollout_sim.heroes:
+			var r: float = rollout_sim.radius(u)
+			var b: int = 12 if r <= 12.0 else (18 if r <= 18.0 else (26 if r <= 26.0 else int(ceilf(r / 4.0) * 4.0)))
+			if not buckets.has(b):
+				buckets[b] = true
+				rollout_warm.append(r)
+		return
+	if rollout_stage == 1:
+		if not rollout_warm.is_empty():
+			# Before start() a gated copy still holds its authored (closed) gates;
+			# warm the grid of the signature the battle will actually route with.
+			var env: ArenaEnv = rollout_sim.env
+			Navigator.for_arena(rollout_sim.arena, float(rollout_warm.pop_back()), env.nav_signature(rollout_sim.time), env.skip_mask())
+			return
+		rollout_stage = 2
+	if rollout_stage == 2:
+		rollout_sim.controllers[0] = AIFactory.make("tactician", rollout_sim, 0)
+		rollout_sim.controllers[1] = AIFactory.make("tactician", rollout_sim, 1)
+		rollout_sim.start()
+		rollout_stage = 3
+		return
+	if rollout_sim.state == BattleSim.RUNNING and rollout_sim.tick < rollout_horizon:
+		rollout_sim.step()
+		rollout_ticks += 1
+		return
+	var value_: float = _rollout_value(rollout_sim, int(job.side))
+	rollout_rows.append({"id": job.id, "side": job.side, "ticks": rollout_sim.tick, "seconds": rollout_sim.time, "value": value_, "finished": rollout_sim.state == BattleSim.FINISHED})
+	rollout_sim.dispose()
+	rollout_sim = null
+	rollout_stage = 0
+	rollout_cursor += 1
+	if rollout_cursor < rollout_jobs.size():
+		return
+	for candidate: Dictionary in final_candidates.slice(0, 2):
+		var mean: float = 0.0
+		for row: Dictionary in rollout_rows:
+			if row.id == candidate.id:
+				mean += float(row.value) / float(rollout_sides)
+		candidate.rollout_value = mean
+		candidate.score = float(candidate.search_score) + engine_signal_weight * mean
+		candidate.engine_finalist = true
+	# Only these two candidates received equal experimental evidence. Preserve
+	# the untested search ranking for diagnostics, never compare its raw values
+	# directly with the finalists' adjusted values.
+	var untested: Array = final_candidates.slice(2)
+	final_candidates = final_candidates.slice(0, 2)
+	_sort_candidates()
+	final_candidates.append_array(untested)
+	_complete()
+
+
+func _rollout_value(sim: BattleSim, side: int) -> float:
+	if sim.state == BattleSim.FINISHED:
+		return 0.0 if sim.winner not in [0, 1] else (1.0 if sim.winner == side else -1.0)
+	var health: float = 0.0
+	var alive: float = 0.0
+	var kills: float = 0.0
+	for u: BUnit in sim.heroes:
+		var sign_: float = 1.0 if u.team == side else -1.0
+		health += sign_ * (sim.hp_ratio(u) if u.alive else 0.0)
+		alive += sign_ if u.alive else 0.0
+		kills += sign_ * u.st_kills
+	var count: float = maxf(1.0, ai_team.size() + 1)
+	if sim.is_control_mode():
+		var stations: float = maxf(1.0, sim.domination.points.size())
+		var score: float = (float(sim.domination.scores[side]) - float(sim.domination.scores[1 - side])) / maxf(1.0, sim.time * stations * DominationMode.SCORE_RATE)
+		var owned: float = 0.0
+		var capture: float = 0.0
+		for point: Dictionary in sim.domination.points:
+			# Public objective state only. A contested circle currently earns
+			# no points; nearing a capture/neutralization matters even when a
+			# short trial ends just before its five-second channel completes.
+			owned += (1.0 if point.owner == side else (-1.0 if point.owner == 1 - side else 0.0)) * (0.5 if bool(point.contested) else 1.0)
+			capture += (-1.0 if side == 0 else 1.0) * float(point.progress) if not bool(point.contested) else 0.0
+		return clampf(score * 0.60 + owned / stations * 0.20 + capture / stations * 0.05 + health / count * 0.10 + kills / count * 0.05, -1.0, 1.0)
+	return clampf(health / count * 0.55 + alive / count * 0.35 + kills / count * 0.10, -1.0, 1.0)
+
+
+func _complete() -> void:
+	var per_evals: Dictionary = {}
+	var per_budget: Dictionary = {}
+	var history_samples: float = 0.0
+	for id: String in director.ids:
+		history_samples += maxf(0.0, float(director.user_history.get(id, 0)))
+	for root: Dictionary in roots:
+		per_evals[director.ids[root.idx]] = root.evals
+		per_budget[director.ids[root.idx]] = root.quota
+	var metrics: Dictionary = {"nodes": nodes, "evals": calls, "cache_misses": director.cache_misses, "depth": completed_depth,
+		"completed_depth": completed_depth, "target_depth": max_depth, "candidates": roots.size(), "covered_candidates": covered,
+		"forecast_complete": completed_depth >= 1,
+		"search_complete": completed_depth >= 2 * director.team_size - ai_team.size() - user_team.size(),
+		"policy_completion": {"enabled": true, "completed_candidates": roots.size() if completed_depth >= 1 else 0, "evals": completion_evals,
+			"leaves": completion_leaves, "prefix_fallback": completed_depth == 0, "policy": "public_legal_greedy"},
+		"budget": total_budget, "per_candidate_evals": per_evals, "per_candidate_budget": per_budget,
+		"horizon_plan": {"beam_cap": beam_cap, "planned_depth": planned_depth, "estimated_evals_per_candidate": planned_evals_per_root,
+			"terminal_evidence_reuses": terminal_reuses, "minimum_rational_width": 2},
+		"opponent_model": {"worst_weight": 0.72, "expected_weight": 0.28, "history_prior_max": 0.30, "history_samples": history_samples},
+		"rollout": {"enabled": rollout_enabled, "final_pick_only": true, "tick_budget": rollout_tick_budget, "ticks": rollout_ticks,
+			"games": rollout_rows.size(), "horizon_ticks": rollout_horizon, "weight": engine_signal_weight, "finalists_only": true, "rows": rollout_rows,
+			"gap_gate": rollout_gap, "min_horizon_ticks": rollout_min_horizon, "skipped": rollout_skipped, "sides_per_finalist": rollout_sides}}
+	output = director._assemble_decision(user_team, ai_team, final_candidates, metrics)
+	director.last_decision = output
+	director.nodes = nodes
+	phase = "complete"
+	done = true
+	director = null

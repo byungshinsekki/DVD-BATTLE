@@ -1,0 +1,495 @@
+{
+  "checks": [
+    {
+      "check": "hidden codex does not create a simulation",
+      "passed": true
+    },
+    {
+      "check": "setup detail has no preview player",
+      "passed": true
+    },
+    {
+      "check": "draft detail has no preview player",
+      "passed": true
+    },
+    {
+      "check": "requested character and skill open",
+      "passed": true
+    },
+    {
+      "check": "runner and view share the scenario simulation",
+      "passed": true
+    },
+    {
+      "check": "preview facade cannot independently advance the simulation",
+      "passed": true
+    },
+    {
+      "check": "preview canvas keeps 16:9 aspect",
+      "passed": true
+    },
+    {
+      "check": "preview dispatches a real ability",
+      "passed": true
+    },
+    {
+      "check": "real prison terrain exists in the preview",
+      "passed": true
+    },
+    {
+      "check": "3440x1440 native render resolution matches",
+      "passed": true
+    },
+    {
+      "check": "3440x1440 rendered texture resolution matches",
+      "passed": true
+    },
+    {
+      "check": "3440x1440 preview retains 16:9 aspect",
+      "passed": true
+    },
+    {
+      "check": "3440x1440 preview canvas fits visible region",
+      "passed": true
+    },
+    {
+      "check": "3440x1440 all playback controls stay visible",
+      "passed": true
+    },
+    {
+      "check": "3440x1440 description and conditions stay visible",
+      "passed": true
+    },
+    {
+      "check": "3440x1440 no vertical scroll is needed for playback or conditions",
+      "passed": true
+    },
+    {
+      "check": "1600x900 native render resolution matches",
+      "passed": true
+    },
+    {
+      "check": "1600x900 rendered texture resolution matches",
+      "passed": true
+    },
+    {
+      "check": "1600x900 preview retains 16:9 aspect",
+      "passed": true
+    },
+    {
+      "check": "1600x900 preview canvas fits visible region",
+      "passed": true
+    },
+    {
+      "check": "1600x900 all playback controls stay visible",
+      "passed": true
+    },
+    {
+      "check": "1600x900 description and conditions stay visible",
+      "passed": true
+    },
+    {
+      "check": "1600x900 no vertical scroll is needed for playback or conditions",
+      "passed": true
+    },
+    {
+      "check": "pause freezes simulation time",
+      "passed": true
+    },
+    {
+      "check": "2x speed advances twice the simulation time",
+      "passed": true
+    },
+    {
+      "check": "restart disposes and replaces the previous scenario",
+      "passed": true
+    },
+    {
+      "check": "restart resets the timeline",
+      "passed": true
+    },
+    {
+      "check": "non-looping preview stops at its duration",
+      "passed": true
+    },
+    {
+      "check": "loop starts a clean new scenario",
+      "passed": true
+    },
+    {
+      "check": "swordsman rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "swordsman arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "swordsman character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "archer rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "archer arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "archer character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "mage rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "mage arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "mage character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "sniper rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "sniper arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "sniper character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "werewolf rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "werewolf arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "werewolf character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "giant rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "giant arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "giant character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "aphrodite rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "aphrodite arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "aphrodite character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "blood_mage rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "blood_mage arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "blood_mage character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "fisherman rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "fisherman arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "fisherman character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "baseball rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "baseball arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "baseball character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "pirate rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "pirate arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "pirate character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "joker rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "joker arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "joker character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "metatron rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "metatron arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "metatron character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "plague_doctor rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "plague_doctor arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "plague_doctor character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "hive_mind rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "hive_mind arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "hive_mind character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "nitro rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "nitro arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "nitro character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "dimensionalist rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "dimensionalist arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "dimensionalist character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "hermes rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "hermes arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "hermes character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "world_tree rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "world_tree arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "world_tree character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "torturer rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "torturer arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "torturer character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "engineer rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "engineer arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "engineer character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "politician rapid skill switch disposes old state",
+      "passed": true
+    },
+    {
+      "check": "politician arena tab detaches all simulation references",
+      "passed": true
+    },
+    {
+      "check": "politician character tab restarts cleanly",
+      "passed": true
+    },
+    {
+      "check": "leaving codex stops and disposes the preview",
+      "passed": true
+    },
+    {
+      "check": "all preview operations preserve player records",
+      "passed": true
+    },
+    {
+      "check": "preview leaves an existing match untouched",
+      "passed": true
+    },
+    {
+      "check": "draft exposes incremental search progress",
+      "passed": true
+    },
+    {
+      "check": "draft cancellation releases the search",
+      "passed": true
+    },
+    {
+      "check": "cancel preserves the chosen roster",
+      "passed": true
+    },
+    {
+      "check": "cancelled search can restart",
+      "passed": true
+    },
+    {
+      "check": "leaving draft cancels active search",
+      "passed": true
+    },
+    {
+      "check": "incremental final 5v5 pick completes",
+      "passed": true
+    },
+    {
+      "check": "final pick uses actual battle verification",
+      "passed": false
+    },
+    {
+      "check": "UI validation does not write player records",
+      "passed": true
+    }
+  ],
+  "failed": 1,
+  "measurements": {
+    "cancel_ms": 17.063,
+    "final_5v5_frames": 25,
+    "final_5v5_seconds": 0.496192,
+    "layout_1600x900": {
+      "actual_display_size": [
+        1600,
+        900
+      ],
+      "actual_render_size": [
+        1600,
+        900
+      ],
+      "actual_window_size": [
+        1600,
+        900
+      ],
+      "canvas_height": 346.5,
+      "canvas_width": 616.0,
+      "conditions_bottom": 842.0,
+      "controls_bottom": 648.0,
+      "display_mode": 0,
+      "screen_size": [
+        3440,
+        1440
+      ],
+      "screen_usable_rect": "[P: (0, 0), S: (3440, 1392)]",
+      "settle_ms": 182,
+      "visible_bottom": 876.0,
+      "visible_height": 746.0,
+      "window_mode": 0
+    },
+    "layout_3440x1440": {
+      "actual_display_size": [
+        3440,
+        1440
+      ],
+      "actual_render_size": [
+        3440,
+        1440
+      ],
+      "actual_window_size": [
+        3440,
+        1440
+      ],
+      "canvas_height": 397.0,
+      "canvas_width": 705.77783203125,
+      "conditions_bottom": 868.0,
+      "controls_bottom": 698.0,
+      "display_mode": 3,
+      "screen_size": [
+        3440,
+        1440
+      ],
+      "screen_usable_rect": "[P: (0, 0), S: (3440, 1392)]",
+      "settle_ms": 2217,
+      "visible_bottom": 876.0,
+      "visible_height": 746.0,
+      "window_mode": 3
+    },
+    "render_backend": "Windows",
+    "search_peak_slice_ms": 1.358
+  },
+  "passed": 105,
+  "status": "FAIL",
+  "suite": "preview_ui_14"
+}

@@ -1,0 +1,69 @@
+{
+	"tq_all": [
+		["torquemada", "stats.maxHealth", "=", 1120],
+		["torquemada", "stats.attackDamage", "=", 60],
+		["torquemada", "stats.moveSpeed", "=", 88],
+		["torquemada", "stats.armor", "=", 38],
+		["torquemada", "stats.attackSpeed", "=", 0.78],
+		["torquemada", "behavior.survival", "=", 0.5],
+		["torquemada", "ab2.effects", "=", [{"type": "damage", "school": "physical", "base": 45, "ad": 0.6, "ap": 0}, {"type": "status", "status": "root", "duration": 1.25}]],
+		["torquemada", "ab3.effects", "=", [{"type": "cleanse"}, {"type": "damage", "school": "physical", "base": 60, "ad": 0.6, "ap": 0}, {"type": "displace", "mode": "knockback", "distance": 140, "speed": 520}]]
+	],
+	"tq_stats": [
+		["torquemada", "stats.maxHealth", "=", 1120],
+		["torquemada", "stats.attackDamage", "=", 60],
+		["torquemada", "stats.moveSpeed", "=", 88],
+		["torquemada", "stats.armor", "=", 38],
+		["torquemada", "stats.attackSpeed", "=", 0.78]
+	],
+	"hd_cap": [
+		["hades", "ab3.effects.0.capRatio", "=", 0.15]
+	],
+	"hd_s3": [
+		["hades", "ab3.effects.0.damage.base", "=", 4],
+		["hades", "ab3.effects.0.damage.ad", "=", 0.04],
+		["hades", "ab3.effects.0.damage.selfMaxHp", "=", 0.006]
+	],
+	"hd_pet": [
+		["hades", "rule.companion.hp", "=", 340],
+		["hades", "rule.companion.attack.base", "=", 10],
+		["hades", "rule.companion.attack.ad", "=", 0.16]
+	],
+	"wm_pb2": [
+		["war_machine", "rule.fuel_tank.perBasic", "=", 2]
+	],
+	"hd_s3cap": [
+		["hades", "ab3.effects.0.damage.base", "=", 4],
+		["hades", "ab3.effects.0.damage.ad", "=", 0.04],
+		["hades", "ab3.effects.0.damage.selfMaxHp", "=", 0.005],
+		["hades", "ab3.effects.0.capRatio", "=", 0.15]
+	],
+	"tq_v2": [
+		["torquemada", "stats.maxHealth", "=", 1140],
+		["torquemada", "stats.attackDamage", "=", 62],
+		["torquemada", "stats.moveSpeed", "=", 90],
+		["torquemada", "stats.armor", "=", 41],
+		["torquemada", "stats.magicResistance", "=", 40],
+		["torquemada", "stats.attackSpeed", "=", 0.9],
+		["torquemada", "behavior.survival", "=", 0.5],
+		["torquemada", "ab1.effects", "=", [{"type": "zone", "radius": 90, "duration": 3, "interval": 0.2, "filter": "ally", "oncePerUnit": true, "originSingle": true, "effects": [{"type": "cleanse"}]}, {"type": "zone", "radius": 90, "duration": 3, "interval": 0.5, "filter": "enemy", "effects": [{"type": "damage", "school": "magic", "base": 20, "ad": 0, "ap": 0.5}]}]],
+		["torquemada", "ab2.cooldown", "=", 9],
+		["torquemada", "ab2.condition.ccSourceWithin", "=", 8.0],
+		["torquemada", "ab2.effects", "=", [{"type": "damage", "school": "physical", "base": 50, "ad": 0.8, "ap": 0}, {"type": "status", "status": "root", "duration": 1.25}]],
+		["torquemada", "ab3.effects", "=", [{"type": "cleanse"}, {"type": "damage", "school": "physical", "base": 60, "ad": 0.8, "ap": 0}, {"type": "displace", "mode": "knockback", "distance": 140, "speed": 520}]]
+	],
+	"tq_v3": [
+		["torquemada", "stats.maxHealth", "=", 1140],
+		["torquemada", "stats.attackDamage", "=", 62],
+		["torquemada", "stats.moveSpeed", "=", 90],
+		["torquemada", "stats.armor", "=", 41],
+		["torquemada", "stats.magicResistance", "=", 40],
+		["torquemada", "stats.attackSpeed", "=", 0.9],
+		["torquemada", "behavior.survival", "=", 0.5],
+		["torquemada", "ab1.effects", "=", [{"type": "zone", "radius": 90, "duration": 3, "interval": 0.2, "filter": "ally", "oncePerUnit": true, "originSingle": true, "effects": [{"type": "cleanse"}, {"type": "heal", "base": 80, "ad": 0, "ap": 1.0}]}, {"type": "zone", "radius": 90, "duration": 3, "interval": 0.5, "filter": "enemy", "effects": [{"type": "damage", "school": "magic", "base": 20, "ad": 0, "ap": 0.5}]}]],
+		["torquemada", "ab2.cooldown", "=", 9],
+		["torquemada", "ab2.condition.ccSourceWithin", "=", 8.0],
+		["torquemada", "ab2.effects", "=", [{"type": "damage", "school": "physical", "base": 50, "ad": 0.8, "ap": 0}, {"type": "status", "status": "root", "duration": 1.25}]],
+		["torquemada", "ab3.effects", "=", [{"type": "cleanse"}, {"type": "shield", "base": 90, "ad": 0, "ap": 1.5, "duration": 3}, {"type": "damage", "school": "physical", "base": 60, "ad": 0.8, "ap": 0}, {"type": "displace", "mode": "knockback", "distance": 140, "speed": 520}]]
+	]
+}

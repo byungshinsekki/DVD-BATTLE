@@ -1,0 +1,7 @@
+# Explicit additions retained when they are not yet present in script strings.
+# Existing CJK subset coverage is preserved independently through each cmap.
+政報誘宣訊默
+# V2 planned hero vocabulary from the approved work order (not hero data edits).
+冥府死魂亡靈骸犬獒王禁違收穫鎌機械炎審判異端英槍馬車戰甲推噴導彈罐油滅殺信欲淨縛令勅法罪焚踵雄神鬼影闇暗
+# Required UI/status glyphs outside the automatically selected Unicode blocks.
+⌁⊥⊘≠✕✚✦✿♥♣★·•
