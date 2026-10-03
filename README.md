@@ -2,6 +2,12 @@
 
 Godot으로 만든 한국어 전략 자동 전투 게임입니다. 현재 공개 소스는 **V2 프리뷰 · 드래프트 핫픽스**입니다.
 
+## Linux 배포판
+
+64비트 Intel/AMD Linux용 독립 실행 파일은 [Linux 프리뷰 릴리스](https://github.com/byungshinsekki/DVD-BATTLE/releases/tag/v2-preview-draft-hf1-linux)에서 받을 수 있습니다. `.tar.gz`를 풀고 `DVD_BATTLE_V2_PREVIEW_DRAFT_HF1.x86_64`를 실행하십시오. Godot 편집기와 별도 PCK는 필요하지 않습니다. 실행 권한과 엔진·글꼴 라이선스가 함께 들어 있습니다.
+
+Linux 검증 범위와 남은 제한은 릴리스에 첨부된 `LINUX_VALIDATION_KO.md`를 확인하십시오. 공개 저장소의 Linux 검증 워크플로는 업로드한 배포 파일의 해시를 확인하고, 격리된 사용자 폴더에서 실제 실행 파일을 시험합니다. 프리뷰의 기존 밸런스·성능 제한은 계속 적용됩니다.
+
 ## 실행
 
 1. 검증에 사용한 Godot 버전은 **4.7.2**입니다.

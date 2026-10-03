@@ -1,0 +1,84 @@
+name: Linux preview native smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: Draft Linux release ID (decimal digits)
+        required: true
+        type: string
+      asset_id:
+        description: Draft Linux release asset ID (decimal digits)
+        required: true
+        type: string
+      archive_sha256:
+        description: Expected tar.gz SHA-256 (64 hexadecimal characters)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  native-smoke:
+    name: Native headless smoke (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-22.04]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - name: Verify and run the draft release in an isolated profile
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SMOKE_RELEASE_ID: ${{ inputs.release_id }}
+          SMOKE_ASSET_ID: ${{ inputs.asset_id }}
+          SMOKE_ARCHIVE_SHA256: ${{ inputs.archive_sha256 }}
+        shell: bash
+        run: |
+          python3 -B - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import subprocess
+          import sys
+          import tempfile
+          import urllib.request
+
+          class SameHost(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  from urllib.parse import urlsplit
+                  target = urlsplit(newurl)
+                  if target.scheme != "https" or target.hostname != "raw.githubusercontent.com" or target.port not in (None, 443):
+                      raise RuntimeError("Unexpected source redirect")
+                  return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+          try:
+              repo = os.environ["GITHUB_REPOSITORY"]
+              commit = os.environ["GITHUB_SHA"]
+              if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repo) or not re.fullmatch(r"[0-9a-f]{40}", commit):
+                  raise RuntimeError("Invalid workflow source identity")
+              url = f"https://raw.githubusercontent.com/{repo}/{commit}/tools/linux_preview_smoke.py"
+              # Public source request: no authentication header and no external action.
+              opener = urllib.request.build_opener(SameHost())
+              with opener.open(url, timeout=30) as response:
+                  source = response.read(1024 * 1024 + 1)
+              if not source or len(source) > 1024 * 1024:
+                  raise RuntimeError("Invalid smoke helper size")
+              with tempfile.TemporaryDirectory(prefix="linux-smoke-source-") as folder:
+                  helper = Path(folder) / "linux_preview_smoke.py"
+                  helper.write_bytes(source)
+                  completed = subprocess.run([sys.executable, "-B", str(helper)], check=False, timeout=800)
+              sys.exit(completed.returncode)
+          except Exception:
+              # Do not print exceptions containing request URLs, signed URLs, or headers.
+              result = {"status": "FAIL", "failure_stage": "bootstrap", "error": "source_download_or_launch_failed"}
+              print("LINUX_SMOKE_RESULT=" + json.dumps(result, separators=(",", ":")), flush=True)
+              summary = os.environ.get("GITHUB_STEP_SUMMARY")
+              if summary:
+                  with open(summary, "a", encoding="utf-8") as output:
+                      output.write("### Linux native smoke: FAIL\n\nSource download or helper launch failed.\n")
+              sys.exit(1)
+          PY
