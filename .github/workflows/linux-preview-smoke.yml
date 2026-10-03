@@ -17,7 +17,9 @@ on:
         type: string
 
 permissions:
-  contents: read
+  # GitHub restricts unpublished draft assets to callers with repository push
+  # access. The helper performs GET requests only; no PAT is stored or supplied.
+  contents: write
 
 jobs:
   native-smoke:
